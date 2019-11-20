@@ -9,17 +9,23 @@ buildscript {
   }
 }
 
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeCloudPayments_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeCloudPayments_' + name]).toInteger()
+}
+
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 27
-  buildToolsVersion "27.0.3"
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+  buildToolsVersion getExtOrDefault('buildToolsVersion')
 
   defaultConfig {
-    minSdkVersion 19
-    targetSdkVersion 27
-    versionCode 110
-    versionName "1.1.0"
+    minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
   }
   lintOptions {
     abortOnError false
